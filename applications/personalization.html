@@ -1,0 +1,75 @@
+<head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap" rel="stylesheet">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        background-color: #ff6c6c;
+        font-family: "Google Sans Flex";
+        font-size: 20px;
+    }
+    
+    .asidj {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 95vh;
+    }
+    
+    input[type="file"] {
+        font-family: "Google Sans Flex";
+        font-size: 20px;
+        color: #000000;
+    }
+</style>
+</head>
+<body>
+    
+<div class="asidj">
+  <label for="bgInput">Select background image: <input type="file" id="bgInput" accept="image/*" /> </label>
+</div>
+<div class="asdfdf">
+  <label for="appman" id="asdjd">Install new application: <input type="file" id="appman" accept=".html" /> </label>
+</div>
+
+
+  <script>
+    const bgInput = document.getElementById('bgInput');
+
+    bgInput.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      
+      if (file) {
+        const imageURL = URL.createObjectURL(file);
+        window.parent.postMessage({
+          type: 'SET_BACKGROUND',
+          url: imageURL
+        }, window.location.origin);
+      }
+    });
+    const appman = document.getElementById('appman');
+    const djf = document.getElementById('asdjd');
+
+    appman.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      
+      if (file) {
+        const htmlURL = URL.createObjectURL(file);
+        window.parent.postMessage({
+          type: 'INSTALL',
+          url: htmlURL
+        }, window.location.origin);
+        appman.remove();
+        djf.innerText = "Installed! You can now close this window and check it out"
+
+      }
+    });
+  </script>
+
+</body>

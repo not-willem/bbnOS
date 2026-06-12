@@ -1,0 +1,106 @@
+body {
+    background-image:url("oneimagetorulethemall.png");
+    
+}
+
+h1,p,h2,h3,h4,h5,h6 {
+    font-family: "Google Sans Flex", sans-serif;
+    font-weight: 100;
+    text-align: center;
+    
+}
+.whitetext {
+    font-family: "Google Sans Flex", sans-serif;
+    font-weight: 100;
+    text-align: center;
+    color:white;
+    position: absolute;
+    text-decoration: none;
+    z-index: 100;
+    left: 0;
+    right: 0;
+    width: 100%;
+}
+
+.listman {
+    font-family: "Google Sans Flex", sans-serif;
+    font-weight: 100;
+    text-align: center;
+    color:white;
+    position: absolute;
+    text-decoration: none;
+    z-index: 100;
+    left: 0;
+    right: 0;
+    width: 100%;
+    top:25vh;
+    
+}
+
+.listitem {
+    font-family: "Google Sans Flex", sans-serif;
+    font-weight: 100;
+    color:rgb(0, 213, 255);
+    text-decoration: none;
+}
+
+.adfadf {
+    font-family: "Google Sans Flex", sans-serif;
+    font-weight: 100;
+    text-align: center;
+    color:white;
+    position: absolute;
+    text-decoration: none;
+    z-index: 1000;
+}
+
+.closebutton {
+    font-family: "Google Sans Flex", sans-serif;
+    font-weight: 100;
+    text-align: center;
+    color:rgb(0, 0, 0);
+    position: absolute;
+    text-decoration: none;
+    z-index: 1000;
+}
+
+
+.buttonn {
+    background:linear-gradient(to bottom, #000000 0%, #000000 0%);
+	background-color:#000000;
+	border-radius:7px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family: "Google Sans Flex", sans-serif;
+	font-size:18px;
+	padding:19px 27px;
+	text-decoration:none;
+    text-align: center;
+    display: grid;
+    place-items: center;
+}
+
+.buttom {
+    text-align: center;
+}
+
+.poop {
+    background-color: lightgoldenrodyellow;
+    border-radius: 10px;
+}
+.timeeme {
+    text-align: left;
+    padding-left: 20px;
+}
+
+.fff {
+    text-align: center;
+    display: grid;
+    place-items: center;
+    z-index: 100;
+}
+
+.windtoe {
+    background-color: white;
+}
