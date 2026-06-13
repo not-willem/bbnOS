@@ -164,10 +164,11 @@ window.addEventListener('message', (event) => {
       }
     });
 window.addEventListener('message', (event) => {
-      if (event.origin !== window.location.origin) return;
-      if (event.data && event.data.type === 'INSTALL') {
-        const urla = event.data.url;
-        urls.push(urla);
-        titless.push('HTML File');
-      }
-    });
+    if (event.origin !== window.location.origin) return;
+    if (event.data && event.data.type === 'INSTALL') {
+        const blob = new Blob([event.data.content], { type: 'text/html' });
+        const blobUrl = URL.createObjectURL(blob);
+        urls.push(blobUrl);
+        titless.push(event.data.filename.replace('.html', ''));
+    }
+});
