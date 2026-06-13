@@ -1,6 +1,6 @@
 const titless = ['terminal','browser','personalization'];
 const urls = ['terminal.html','browser.html','personalization.html'];
-const openwwindows = []
+const openwwindows = [];
 var winded = false;
 
 function startoss() {
@@ -164,11 +164,15 @@ window.addEventListener('message', (event) => {
       }
     });
 window.addEventListener('message', (event) => {
-    if (event.origin !== window.location.origin) return;
-    if (event.data && event.data.type === 'INSTALL') {
+      if (event.origin !== window.location.origin) return;
+      if (event.data && event.data.type === 'INSTALL') {
         const blob = new Blob([event.data.content], { type: 'text/html' });
         const blobUrl = URL.createObjectURL(blob);
         urls.push(blobUrl);
-        titless.push(event.data.filename.replace('.html', ''));
-    }
-});
+        let appName = 'HTML File';
+        if (event.data.filename) {
+            appName = event.data.filename.replace('.html', '');
+        }
+        titless.push(appName);
+      }
+    });
