@@ -39,39 +39,36 @@
 </div>
 
 
-  <script>
     const bgInput = document.getElementById('bgInput');
 
     bgInput.addEventListener('change', (event) => {
-      const file = event.target.files[0];
-      
-      if (file) {
-        const imageURL = URL.createObjectURL(file);
-        window.parent.postMessage({
-          type: 'SET_BACKGROUND',
-          url: imageURL
-        }, window.location.origin);
-      }
+        const file = event.target.files[0];
+        
+        if (file) {
+            const imageURL = URL.createObjectURL(file);
+            window.parent.postMessage({
+                type: 'SET_BACKGROUND',
+                url: imageURL
+            }, window.location.origin);
+        }
     });
+    
     const appman = document.getElementById('appman');
     const djf = document.getElementById('asdjd');
 
-   appman.addEventListener('change', async (event) => {
-       const file = event.target.files[0];
-       
-       if (file) {
-           const fileContent = await file.text();
-           window.parent.postMessage({
-               type: 'INSTALL',
-               content: fileContent,
-               filename: file.name
-           }, window.location.origin);
-           appman.remove();
-           djf.innerText = "Installed! You can now close this window and check it out"
-       }
-});
-   });
+    appman.addEventListener('change', async (event) => {
+        const file = event.target.files[0];
+        
+        if (file) {
+            const fileContent = await file.text();
+            window.parent.postMessage({
+                type: 'INSTALL',
+                content: fileContent,
+                filename: file.name
+            }, window.location.origin);
+            appman.remove();
+            djf.innerText = "Installed! You can now close this window and check it out"
+        }
     });
-  </script>
 
 </body>
