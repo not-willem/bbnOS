@@ -13,34 +13,96 @@
         background-color: #ff6c6c;
         font-family: "Google Sans Flex";
         font-size: 20px;
+        padding: 20px;
     }
     
     .asidj {
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 95vh;
+        margin-bottom: 30px;
+        padding: 20px;
+        background: rgba(255,255,255,0.9);
+        border-radius: 10px;
+    }
+    
+    .asdfdf {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 20px;
+        background: rgba(255,255,255,0.9);
+        border-radius: 10px;
+        gap: 15px;
     }
     
     input[type="file"] {
         font-family: "Google Sans Flex";
         font-size: 20px;
         color: #000000;
+        margin-left: 10px;
+    }
+    
+    .custom-file-button {
+        background-color: #000000;
+        color: white;
+        font-family: "Google Sans Flex";
+        font-size: 18px;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 7px;
+        cursor: pointer;
+    }
+    
+    .custom-file-button:hover {
+        background-color: #333333;
+    }
+    
+    #fileName {
+        font-family: "Google Sans Flex";
+        font-size: 16px;
+        color: #0066cc;
+        margin-top: 10px;
+    }
+    
+    #asdjd {
+        font-family: "Google Sans Flex";
+        font-size: 18px;
+        color: #006600;
+        margin-top: 15px;
+        text-align: center;
+    }
+    
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 95vh;
+        gap: 30px;
     }
 </style>
 </head>
 <body>
+<div class="container">
+    <div class="asidj">
+        <label for="bgInput">Select background image:</label>
+        <input type="file" id="bgInput" accept="image/*" />
+    </div>
     
-<div class="asidj">
-  <label for="bgInput">Select background image: <input type="file" id="bgInput" accept="image/*" /> </label>
-</div>
-<div class="asdfdf">
-  <label for="appman" id="asdjd">Install new application: <input type="file" id="appman" accept=".html" /> </label>
+    <div class="asdfdf">
+        <label for="appman">Install new application:</label>
+        <input type="file" id="appman" accept=".html" style="display: none;" />
+        <button onclick="document.getElementById('appman').click()" class="custom-file-button">Choose HTML File</button>
+        <span id="fileName"></span>
+        <p id="asdjd"></p>
+    </div>
 </div>
 
 <script>
     const bgInput = document.getElementById('bgInput');
-
+    
     bgInput.addEventListener('change', (event) => {
         const file = event.target.files[0];
         
@@ -55,11 +117,14 @@
     
     const appman = document.getElementById('appman');
     const djf = document.getElementById('asdjd');
-
+    const fileNameSpan = document.getElementById('fileName');
+    const customButton = document.querySelector('.custom-file-button');
+    
     appman.addEventListener('change', async (event) => {
         const file = event.target.files[0];
         
         if (file) {
+            fileNameSpan.textContent = 'Selected: ' + file.name;
             const fileContent = await file.text();
             window.parent.postMessage({
                 type: 'INSTALL',
@@ -67,9 +132,10 @@
                 filename: file.name
             }, window.location.origin);
             appman.remove();
-            djf.innerText = "Installed! You can now close this window and check it out"
+            customButton.remove();
+            fileNameSpan.remove();
+            djf.innerText = "Installed! You can now close this window and check it out";
         }
     });
 </script>
-
 </body>
