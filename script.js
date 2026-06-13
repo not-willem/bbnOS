@@ -168,6 +168,6 @@ window.addEventListener('message', (event) => {
       if (event.data && event.data.type === 'INSTALL') {
         const urla = event.data.url;
         urls.push(urla);
-        titless.push('HTML File')
+        titless.push('HTML File');
       }
     });
