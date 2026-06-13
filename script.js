@@ -1,5 +1,5 @@
 const titless = ['Terminal','Browser','Personalization'];
-const urls = ['Terminal.html','Browser.html','Personalization.html'];
+const urls = ['terminal.html','browser.html','personalization.html'];
 const openwwindows = []
 var winded = false;
 
