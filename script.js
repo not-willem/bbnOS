@@ -2,7 +2,7 @@ const titless = ['terminal','browser','personalization'];
 const urls = ['terminal.html','browser.html','personalization.html'];
 const openwwindows = [];
 var winded = false;
-let zIndexCounter = 100;
+let zindexfds = 100;
 
 function startoss() {
     const timeman = new Date().toLocaleTimeString('en-US', {
@@ -98,7 +98,7 @@ function appligcations() {
     applicationsmaenu.appendChild(apptext);
     document.body.append(applicationsmaenu);
     currentWindow = applicationsmaenu;
-    makeDraggable(applicationsmaenu);
+    maekdrag(applicationsmaenu);
 }
 function closeappligcations() {
     if (currentWindow) {
@@ -110,16 +110,16 @@ function poopwindow(url) {
     closeappligcations();
     openwwindows.push(url);
     
-    zIndexCounter++;
+    zindexfds++;
     
     const windwoss = document.createElement("div");
     windwoss.className = "window-container";
-    windwoss.style.cssText = "position: absolute; top: 10vh; left: 10vw; width: 80vw; height: 80vh; background-color:white; border-radius:10px; z-index: " + zIndexCounter + ";";
+    windwoss.style.cssText = "position: absolute; top: 10vh; left: 10vw; width: 80vw; height: 80vh; background-color:white; border-radius:10px; z-index: " + zindexfds + ";";
     document.body.appendChild(windwoss);
     
     windwoss.addEventListener('mousedown', function() {
-        zIndexCounter++;
-        windwoss.style.zIndex = zIndexCounter;
+        zindexfds++;
+        windwoss.style.zIndex = zindexfds;
     });
     
     const windowFrame = document.createElement("iframe");
@@ -143,29 +143,36 @@ function poopwindow(url) {
     
     windwoss.appendChild(windowFrame);
     
-    makeDraggable(windwoss);
+    maekdrag(windwoss);
 }
 
-function makeDraggable(element) {
+function maekdrag(element) {
     let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    let isDragging = false;
     
     const header = element.querySelector('h1') || element.querySelector('.closebutton') || element;
     
-    const dragMouseDown = function(e) {
+    const drafgmousedown = function(e) {
         e = e || window.event;
         e.preventDefault();
         pos3 = e.clientX;
         pos4 = e.clientY;
-        document.onmouseup = closeDragElement;
-        document.onmousemove = elementDrag;
+        isDragging = true;
+        document.onmouseup = clsoeerrrg;
+        document.onmousemove = ecmlemtdrag;
+        if (element.setPointerCapture) {
+            element.setPointerCapture(e.pointerId);
+        }
         
-        zIndexCounter++;
-        element.style.zIndex = zIndexCounter;
+        zindexfds++;
+        element.style.zIndex = zindexfds;
     };
     
-    const elementDrag = function(e) {
+    const ecmlemtdrag = function(e) {
         e = e || window.event;
         e.preventDefault();
+        if (!isDragging) return;
+        
         pos1 = pos3 - e.clientX;
         pos2 = pos4 - e.clientY;
         pos3 = e.clientX;
@@ -174,18 +181,56 @@ function makeDraggable(element) {
         element.style.left = (element.offsetLeft - pos1) + "px";
     };
     
-    const closeDragElement = function() {
+    const clsoeerrrg = function() {
+        isDragging = false;
         document.onmouseup = null;
         document.onmousemove = null;
+        if (element.releasePointerCapture) {
+            element.releasePointerCapture();
+        }
+    };
+    const dfdfdfdfadf = function(e) {
+        e.preventDefault();
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        isDragging = true;
+        element.setPointerCapture(e.pointerId);
+        
+        element.onpointermove = potjtnerdrgag;
+        element.onpointerup = clsosbf;
+        
+        zindexfds++;
+        element.style.zIndex = zindexfds;
+    };
+    
+    const potjtnerdrgag = function(e) {
+        e.preventDefault();
+        if (!isDragging) return;
+        
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        element.style.top = (element.offsetTop - pos2) + "px";
+        element.style.left = (element.offsetLeft - pos1) + "px";
+    };
+    
+    const clsosbf = function(e) {
+        isDragging = false;
+        element.onpointermove = null;
+        element.onpointerup = null;
+        element.releasePointerCapture(e.pointerId);
     };
     
     if (element.querySelector('h1')) {
-        element.querySelector('h1').onmousedown = dragMouseDown;
+        element.querySelector('h1').onmousedown = drafgmousedown;
+        element.querySelector('h1').onpointerdown = dfdfdfdfadf;
     } else if (element.querySelector('.closebutton')) {
         const titleBar = document.createElement('div');
         titleBar.style.cssText = "position: absolute; top: 0; left: 0; width: calc(100% - 40px); height: 35px; cursor: move; z-index: 5;";
         element.insertBefore(titleBar, element.firstChild);
-        titleBar.onmousedown = dragMouseDown;
+        titleBar.onmousedown = drafgmousedown;
+        titleBar.onpointerdown = dfdfdfdfadf;
     }
 }
 
