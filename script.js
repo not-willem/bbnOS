@@ -2,6 +2,7 @@ const titless = ['Terminal','Browser','Personalization'];
 const urls = ['Terminal.html','Browser.html','Personalization.html'];
 const openwwindows = []
 var winded = false;
+let zIndexCounter = 100;
 
 function startoss() {
     const timeman = new Date().toLocaleTimeString('en-US', {
@@ -56,7 +57,7 @@ function appligcations() {
         currentWindow.remove();
     }
     const applicationsmaenu = document.createElement("div");
-    applicationsmaenu.style.cssText = "width: 80vw; height: 80vh; background-color: black; border-radius: 10px; text-align: center; display: flex; justify-content: center; align-items: center; margin: auto; position: absolute; top: 0; bottom: 0; left: 0; right: 0; outline: white solid 1px;";
+    applicationsmaenu.style.cssText = "width: 80vw; height: 80vh; background-color: black; border-radius: 10px; text-align: center; display: flex; justify-content: center; align-items: center; margin: auto; position: absolute; top: 0; bottom: 0; left: 0; right: 0; outline: white solid 1px; z-index: 999;";
     const apptext=document.createElement("h1");
     apptext.innerText="Applications";
     apptext.style.cssText = "top: 4vh; position:absolute;"
@@ -97,6 +98,7 @@ function appligcations() {
     applicationsmaenu.appendChild(apptext);
     document.body.append(applicationsmaenu);
     currentWindow = applicationsmaenu;
+    makeDraggable(applicationsmaenu);
 }
 function closeappligcations() {
     if (currentWindow) {
@@ -106,19 +108,19 @@ function closeappligcations() {
 }
 function poopwindow(url) {
     closeappligcations();
-    openwwindows.length = 0;
     openwwindows.push(url);
     
-    let windwoss = document.getElementById("window-container");
-
-    if (windwoss) {
-        windwoss.remove();
-    }
+    zIndexCounter++;
     
-    windwoss = document.createElement("div");
-    windwoss.id = "window-container";
-    windwoss.style.cssText = "position: absolute; top: 10vh; left: 10vw; width: 80vw; height: 80vh; background-color:white; border-radius:10px;";
+    const windwoss = document.createElement("div");
+    windwoss.className = "window-container";
+    windwoss.style.cssText = "position: absolute; top: 10vh; left: 10vw; width: 80vw; height: 80vh; background-color:white; border-radius:10px; z-index: " + zIndexCounter + ";";
     document.body.appendChild(windwoss);
+    
+    windwoss.addEventListener('mousedown', function() {
+        zIndexCounter++;
+        windwoss.style.zIndex = zIndexCounter;
+    });
     
     const windowFrame = document.createElement("iframe");
     windowFrame.src = url;
@@ -127,25 +129,67 @@ function poopwindow(url) {
     const dfdf = document.createElement("a");
     dfdf.href = "jjdj"; 
     dfdf.className = "closebutton";
-    dfdf.id = "closebutton";
     dfdf.innerHTML = "X";
-    dfdf.style.top = "2vh";
-    dfdf.style.position = "absolute";
-    dfdf.style.right = "2vw";
-    dfdf.style.fontSize = "20px";
-    dfdf.style.color = "gray";
+    dfdf.style.cssText = "position: absolute; top: 10px; right: 15px; font-size: 20px; color: gray; z-index: 10; cursor: pointer; text-decoration: none;";
     dfdf.addEventListener('click', function(event) {
         event.preventDefault();
-        closewindwos();
-    } )
+        windwoss.remove();
+        const index = openwwindows.indexOf(url);
+        if (index > -1) {
+            openwwindows.splice(index, 1);
+        }
+    });
     windwoss.appendChild(dfdf);
     
     windwoss.appendChild(windowFrame);
+    
+    makeDraggable(windwoss);
+}
+
+function makeDraggable(element) {
+    let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    
+    const header = element.querySelector('h1') || element.querySelector('.closebutton') || element;
+    
+    const dragMouseDown = function(e) {
+        e = e || window.event;
+        e.preventDefault();
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        document.onmouseup = closeDragElement;
+        document.onmousemove = elementDrag;
+        
+        zIndexCounter++;
+        element.style.zIndex = zIndexCounter;
+    };
+    
+    const elementDrag = function(e) {
+        e = e || window.event;
+        e.preventDefault();
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        element.style.top = (element.offsetTop - pos2) + "px";
+        element.style.left = (element.offsetLeft - pos1) + "px";
+    };
+    
+    const closeDragElement = function() {
+        document.onmouseup = null;
+        document.onmousemove = null;
+    };
+    
+    if (element.querySelector('h1')) {
+        element.querySelector('h1').onmousedown = dragMouseDown;
+    } else if (element.querySelector('.closebutton')) {
+        const titleBar = document.createElement('div');
+        titleBar.style.cssText = "position: absolute; top: 0; left: 0; width: calc(100% - 40px); height: 35px; cursor: move; z-index: 5;";
+        element.insertBefore(titleBar, element.firstChild);
+        titleBar.onmousedown = dragMouseDown;
+    }
 }
 
 function closewindwos() {
-    const container = document.getElementById("window-container");
-    if (container) container.remove();
     closeappligcations();
     openwwindows.length = 0;
 }
