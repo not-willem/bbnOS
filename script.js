@@ -1,6 +1,6 @@
-const titless = ['Terminal','Browser','Personalization'];
-const urls = ['Terminal.html','Browser.html','Personalization.html'];
-const openwwindows = []
+const titless = ['terminal','browser','personalization'];
+const urls = ['terminal.html','browser.html','personalization.html'];
+const openwwindows = [];
 var winded = false;
 let zIndexCounter = 100;
 
@@ -210,8 +210,13 @@ window.addEventListener('message', (event) => {
 window.addEventListener('message', (event) => {
       if (event.origin !== window.location.origin) return;
       if (event.data && event.data.type === 'INSTALL') {
-        const urla = event.data.url;
-        urls.push(urla);
-        titless.push('HTML File')
+        const blob = new Blob([event.data.content], { type: 'text/html' });
+        const blobUrl = URL.createObjectURL(blob);
+        urls.push(blobUrl);
+        let appName = 'HTML File';
+        if (event.data.filename) {
+            appName = event.data.filename.replace('.html', '');
+        }
+        titless.push(appName);
       }
     });
